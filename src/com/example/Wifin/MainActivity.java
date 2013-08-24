@@ -10,6 +10,7 @@ import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+//import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -29,6 +30,7 @@ public class MainActivity extends Activity
     myWifi mwifi;
     WifiReceiver mreceiver;
     SimpleAdapter adapter;
+    //ArrayAdapter<HashMap<String, String>> adapter;
     ArrayList<HashMap<String, String>> arraylist;
     String ITEM_KEY;
     
@@ -43,12 +45,20 @@ public class MainActivity extends Activity
 		arraylist = new ArrayList<HashMap<String, String>>();
 		ITEM_KEY = "key";
 		
+		//adapter = new SimpleAdapter(
+				//this, 
+				//arraylist, 
+				//R.layout.activity_main,
+				//new String[] { ITEM_KEY },
+				//new int[] { R.id.listView_wifi });
+		//adapter = new ArrayAdapter<HashMap<String, String>> (this,R.layout.activity_main,arraylist); 
 		adapter = new SimpleAdapter(
-				this, 
-				arraylist, 
-				R.layout.activity_main,
-				new String[] { ITEM_KEY },
-				new int[] { R.id.listView_wifi });
+                this, 
+                arraylist, 
+                android.R.layout.simple_list_item_1,
+                new String[] { ITEM_KEY },
+                new int[] { android.R.id.text1 });
+		
 		
 		txtlocation= (TextView) findViewById(R.id.locView);
 		btn_loc  = (Button) this.findViewById(R.id.button_location);

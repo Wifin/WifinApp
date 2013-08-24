@@ -17,7 +17,7 @@ public class WifiReceiver extends BroadcastReceiver
 	double ap_rssi;
 	double ap_feq;
 	double distance;
-	String ssid;
+	//String ssid;
 	
 	
 	@Override
@@ -41,14 +41,14 @@ public class WifiReceiver extends BroadcastReceiver
 	    	{		    		
 			    ap_rssi = Double.valueOf(wifilist.get(size).level);
 			    ap_feq = Double.valueOf(wifilist.get(size).frequency);
-			    ssid = String.valueOf(wifilist.get(size).SSID);
+			    //ssid = String.valueOf(wifilist.get(size).SSID);
 			
 			    distance=Math.pow(10, (Math.abs(ap_rssi)-20*Math.log10(ap_feq)-32.44)/20)*1000;
 			
 			    System.out.println("distance:"+(Math.round(distance*100))/100.0);
 	            	
 	            HashMap<String, String> item = new HashMap<String, String>();
-				item.put(ma.ITEM_KEY, ssid +""+String.valueOf((Math.round(distance*100))/100.0));
+				item.put(ma.ITEM_KEY, wifilist.get(size).SSID +"   "+"Distance:"+(Math.round(distance*100))/100.0);
 				ma.arraylist.add(item);
 				size--;	
 	    	  }
