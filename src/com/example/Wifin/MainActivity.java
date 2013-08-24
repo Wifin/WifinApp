@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
@@ -47,7 +48,8 @@ public class MainActivity extends Activity
 				arraylist, 
 				R.layout.activity_main,
 				new String[] { ITEM_KEY },
-				new int[] { R.id.listView_wifi });		
+				new int[] { R.id.listView_wifi });
+		
 		txtlocation= (TextView) findViewById(R.id.locView);
 		btn_loc  = (Button) this.findViewById(R.id.button_location);
 		btn_ser = (Button) this.findViewById(R.id.button_services);
@@ -69,7 +71,8 @@ public class MainActivity extends Activity
 		    
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub	
+				// TODO Auto-generated method stub
+				   arraylist.clear();
 				   mlocal.getlocation();
 				   txtlocation.setText(mlocal.mCurrentLocation.getLatitude() + "," + mlocal.mCurrentLocation.getLongitude());
 				   mwifi.scanWifi();
@@ -116,6 +119,16 @@ public class MainActivity extends Activity
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
+	
+	protected void onPause() {
+        unregisterReceiver(mreceiver);
+        super.onPause();
+    }
+
+    protected void onResume() {
+        registerReceiver(mreceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        super.onResume();
+    }
 
 
 }

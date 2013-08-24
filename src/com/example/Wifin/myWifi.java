@@ -5,6 +5,7 @@ import android.net.wifi.WifiManager;
 public class myWifi
 {
 	WifiManager wifi;
+	WifiReceiver receiverWifi;
 	
 	public void scanWifi()
 	{	
@@ -12,6 +13,7 @@ public class myWifi
 		OpenWifi();
 		wifi.startScan();
 		System.out.println("wifiscan=" + wifi.startScan());
+		
 		
 	}
 	
@@ -22,7 +24,5 @@ public class myWifi
 			wifi.setWifiEnabled(true);
 		}
 	}
-
-
-	
+		
 }
