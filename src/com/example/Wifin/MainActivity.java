@@ -1,5 +1,8 @@
 package com.example.Wifin;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import android.app.Activity;
 import android.content.Context;
 import android.net.wifi.WifiManager;
@@ -23,6 +26,10 @@ public class MainActivity extends Activity
     ListView wifi_lv;
     myLocation mlocal;
     myWifi mwifi;
+    WifiReceiver mreceiver;
+    SimpleAdapter adapter;
+    ArrayList<HashMap<String, String>> arraylist;
+    String ITEM_KEY;
     
   
     @Override
@@ -32,6 +39,15 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		arraylist = new ArrayList<HashMap<String, String>>();
+		ITEM_KEY = "key";
+		
+		adapter = new SimpleAdapter(
+				this, 
+				arraylist, 
+				R.layout.activity_main,
+				new String[] { ITEM_KEY },
+				new int[] { R.id.listView_wifi });		
 		txtlocation= (TextView) findViewById(R.id.locView);
 		btn_loc  = (Button) this.findViewById(R.id.button_location);
 		btn_ser = (Button) this.findViewById(R.id.button_services);
@@ -39,15 +55,14 @@ public class MainActivity extends Activity
 		wifi_lv =(ListView)findViewById(R.id.listView_wifi);
 		mlocal = new myLocation();
 		mwifi =new myWifi();
+		mreceiver =new WifiReceiver();
+		
+		mlocal.checkGoogleplay(this);		
+		wifi_lv.setAdapter(adapter);
+		
+		//mwifi.scanWifi(this.getApplicationContext());
 		
 		mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		
-		mwifi.adapter = new SimpleAdapter(this, mwifi.arraylist, R.layout.activity_main,new String[] { mwifi.ITEM_KEY }, new int[] { R.id.listView_wifi });
-		
-		mlocal.checkGoogleplay(this);
-		
-		wifi_lv.setAdapter(mwifi.adapter);
-		
 		
 		 
 		    btn_loc.setOnClickListener(new View.OnClickListener() {
@@ -58,8 +73,8 @@ public class MainActivity extends Activity
 				   mlocal.getlocation();
 				   txtlocation.setText(mlocal.mCurrentLocation.getLatitude() + "," + mlocal.mCurrentLocation.getLongitude());
 				   mwifi.scanWifi();
-				   mwifi.getwifilist();			   
-				   System.out.println("111");
+				   mreceiver.getwifilist(MainActivity.this);	
+				   adapter.notifyDataSetChanged();
 			}
 		    });
 		    
