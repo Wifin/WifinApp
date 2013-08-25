@@ -21,7 +21,7 @@ public class MainActivity extends Activity
 	
     TextView txtlocation;
     TextView txtstatus;
-    TextView txtinstant;
+    TextView txtaploc;
     Button btn_loc;
     Button btn_ser;
     Button bnt_aploc;
@@ -33,6 +33,7 @@ public class MainActivity extends Activity
     //ArrayAdapter<HashMap<String, String>> adapter;
     ArrayList<HashMap<String, String>> arraylist;
     String ITEM_KEY;
+    apLocation aploc;
     
   
     @Override
@@ -61,13 +62,16 @@ public class MainActivity extends Activity
 		
 		
 		txtlocation= (TextView) findViewById(R.id.locView);
+		txtaploc = (TextView) findViewById(R.id.aplocView);
 		btn_loc  = (Button) this.findViewById(R.id.button_location);
 		btn_ser = (Button) this.findViewById(R.id.button_services);
 		bnt_aploc = (Button) this.findViewById(R.id.button_aploc);
 		wifi_lv =(ListView)findViewById(R.id.listView_wifi);
+		
 		mlocal = new myLocation();
 		mwifi =new myWifi();
 		mreceiver =new WifiReceiver();
+		aploc = new apLocation();
 		
 		mlocal.checkGoogleplay(this);		
 		wifi_lv.setAdapter(adapter);
@@ -116,7 +120,7 @@ public class MainActivity extends Activity
 				@Override
 				public void onClick(View v) 
 				{
-					
+					txtaploc.setText(aploc.getlatitude()+","+aploc.getlongitude());					
 				}
 			});		
 		    		    

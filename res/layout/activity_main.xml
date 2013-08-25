@@ -40,16 +40,16 @@
             android:text="Start Location Service" />
     
     <TextView
-        android:id="@+id/instantView"
+        android:id="@+id/aplocView"
         android:layout_below="@+id/button_services"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="0.0,0.0"
+        android:text="Apname:0.0,0.0"
         android:textAppearance="?android:attr/textAppearanceLarge" />
     
     <Button
             android:id="@+id/button_aploc"
-            android:layout_below="@+id/instantView"
+            android:layout_below="@+id/aplocView"
             android:layout_width="191dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|top"
