@@ -48,7 +48,7 @@ public class WifiReceiver extends BroadcastReceiver
 			    System.out.println("distance:"+(Math.round(distance*100))/100.0);
 	            	
 	            HashMap<String, String> item = new HashMap<String, String>();
-				item.put(ma.ITEM_KEY, wifilist.get(size).SSID +"   "+"Distance:"+(Math.round(distance*100))/100.0);
+				item.put(ma.ITEM_KEY, wifilist.get(size).SSID +"   "+"Distance:"+(Math.round(distance*100))/100.0+"m");
 				ma.arraylist.add(item);
 				size--;	
 	    	  }
