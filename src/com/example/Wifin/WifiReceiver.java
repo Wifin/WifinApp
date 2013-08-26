@@ -3,6 +3,8 @@ package com.example.Wifin;
 import java.util.HashMap;
 import java.util.List;
 
+import Database.databaseGetSet;
+
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -17,8 +19,9 @@ public class WifiReceiver extends BroadcastReceiver
 	double ap_rssi;
 	double ap_feq;
 	double distance;
-	//String ssid;
+	String ssid;
 	
+	private databaseGetSet dgs = new databaseGetSet();
 	
 	@Override
 	public void onReceive(Context c, Intent i) {
@@ -41,7 +44,7 @@ public class WifiReceiver extends BroadcastReceiver
 	    	{		    		
 			    ap_rssi = Double.valueOf(wifilist.get(size).level);
 			    ap_feq = Double.valueOf(wifilist.get(size).frequency);
-			    //ssid = String.valueOf(wifilist.get(size).SSID);
+			    ssid = String.valueOf(wifilist.get(size).SSID);
 			
 			    distance=Math.pow(10, (Math.abs(ap_rssi)-20*Math.log10(ap_feq)-32.44)/20)*1000;
 			

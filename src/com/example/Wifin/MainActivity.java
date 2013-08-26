@@ -3,6 +3,7 @@ package com.example.Wifin;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import Database.databaseGetSet;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -35,6 +36,8 @@ public class MainActivity extends Activity
     String ITEM_KEY;
     apLocation aploc;
     
+    private databaseGetSet dgs = new databaseGetSet();
+    
   
     @Override
 	public void onCreate(Bundle savedInstanceState)
@@ -43,7 +46,7 @@ public class MainActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		arraylist = new ArrayList<HashMap<String, String>>();
+		arraylist = new ArrayList<HashMap<String, String>>(5);
 		ITEM_KEY = "key";
 		
 		//adapter = new SimpleAdapter(
@@ -89,13 +92,15 @@ public class MainActivity extends Activity
 				   arraylist.clear();
 				   mlocal.getlocation();
 				   txtlocation.setText(mlocal.mCurrentLocation.getLatitude() + "," + mlocal.mCurrentLocation.getLongitude());
+				   setDataBaseData();
+				   
 				   mwifi.scanWifi();
 				   mreceiver.getwifilist(MainActivity.this);	
 				   adapter.notifyDataSetChanged();
 			}
 		    });
 		    
-		    
+		    // StartLocationServices
 		    btn_ser.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
@@ -144,5 +149,11 @@ public class MainActivity extends Activity
         super.onResume();
     }
 
+    private void setDataBaseData(){
+    	dgs.setLongtitude("" + mlocal.mCurrentLocation.getLongitude());
+    	dgs.setLatitude("" + mlocal.mCurrentLocation.getLatitude());
+    	System.err.println(dgs.getLongtitude());
+    	
+    }
 
 }
