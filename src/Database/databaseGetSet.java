@@ -17,7 +17,7 @@ public class databaseGetSet {
 	 * Set values for Mac Address
 	 * */
 	public void setMacAddress(String m){
-		this.macAddress = m ;
+		macAddress = m ;
 	}
 	/**
 	 * Get the values of the Mac Address
@@ -27,7 +27,7 @@ public class databaseGetSet {
 	}
 	
 	public void setSSID(String s){		
-		this.ssid = s ;
+		ssid = s ;
 	}
 	public String getSSID(){
 		return ssid;
@@ -37,7 +37,7 @@ public class databaseGetSet {
 	 * Set values for latitude
 	 * */
 	public void setLatitude(String l){
-		this.latitude = l ;
+		latitude = l ;
 	}
 	/**
 	 * Get the values of the latitude
@@ -50,7 +50,7 @@ public class databaseGetSet {
 	 * Set values for longtitude
 	 * */
 	public void setLongtitude(String l){
-		this.longtitude = l ;
+		longtitude = l ;
 	}
 	/**
 	 * Get the values of the Mac Address
@@ -60,7 +60,7 @@ public class databaseGetSet {
 	}
 	
 	public void setLocation(String l){
-		this.location = l ;
+		location = l ;
 	}
 	/**
 	 * Get the values of the Mac Address
@@ -74,7 +74,7 @@ public class databaseGetSet {
 	 * Set values for SignalStrength
 	 * */
 	public void setSignalStrength(String s){
-		this.strength = s ;
+		strength = s ;
 	}
 	/**
 	 * Get the values of the frequency

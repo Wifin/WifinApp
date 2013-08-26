@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import Database.databaseGetSet;
+import DatabasePHP.databasePush;
 import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
@@ -37,6 +38,7 @@ public class MainActivity extends Activity
     apLocation aploc;
     
     private databaseGetSet dgs = new databaseGetSet();
+    private databasePush dp = new databasePush();
     
   
     @Override
@@ -76,7 +78,8 @@ public class MainActivity extends Activity
 		mreceiver =new WifiReceiver();
 		aploc = new apLocation();
 		
-		mlocal.checkGoogleplay(this);		
+		mlocal.checkGoogleplay(this);
+
 		wifi_lv.setAdapter(adapter);
 		
 		//mwifi.scanWifi(this.getApplicationContext());
@@ -92,9 +95,14 @@ public class MainActivity extends Activity
 				   arraylist.clear();
 				   mlocal.getlocation();
 				   txtlocation.setText(mlocal.mCurrentLocation.getLatitude() + "," + mlocal.mCurrentLocation.getLongitude());
+	   
 				   setDataBaseData();
 				   
+				 //  dp.postInsertData();
+				   
 				   mwifi.scanWifi();
+				   
+				   //Here will go into wifi receiver
 				   mreceiver.getwifilist(MainActivity.this);	
 				   adapter.notifyDataSetChanged();
 			}

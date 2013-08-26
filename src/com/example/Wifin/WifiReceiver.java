@@ -31,6 +31,8 @@ public class WifiReceiver extends BroadcastReceiver
 				WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 		wifilist = ((WifiManager) c.getSystemService(Context.WIFI_SERVICE)).getScanResults();
 		
+		
+		
 	}
 	
 	public void getwifilist (MainActivity ma)
@@ -41,7 +43,11 @@ public class WifiReceiver extends BroadcastReceiver
 		try {
 			size =wifilist.size()-1;
 	        while (size >= 0) 
-	    	{		    		
+	    	{	
+	        	//input the data to the database using the get/set methods.
+	        	dgs.setMacAddress("" + wifilist.get(size).BSSID);
+	        	dgs.setSSID("" + wifilist.get(size).SSID);
+	        	
 			    ap_rssi = Double.valueOf(wifilist.get(size).level);
 			    ap_feq = Double.valueOf(wifilist.get(size).frequency);
 			    ssid = String.valueOf(wifilist.get(size).SSID);
@@ -52,7 +58,10 @@ public class WifiReceiver extends BroadcastReceiver
 	            	
 	            HashMap<String, String> item = new HashMap<String, String>();
 				item.put(ma.ITEM_KEY, wifilist.get(size).SSID +"   "+"Distance:"+(Math.round(distance*100))/100.0+"m");
-				ma.arraylist.add(item);
+				if(ma.arraylist.size() < 5){
+					ma.arraylist.add(item);
+					size--;	
+				}
 				size--;	
 	    	  }
 			}

@@ -54,7 +54,7 @@ public class databasePush {
 	* @exception 
 	* 		IOException - HttpClient not getting the right input.
 	* */
-	public static void setUpHttpPost(String url,  List<NameValuePair> nameValuePairs){
+	private void setUpHttpPost(String url,  List<NameValuePair> nameValuePairs){
 //		HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
 //
 //		DefaultHttpClient client = new DefaultHttpClient();
@@ -99,7 +99,7 @@ public class databasePush {
 	 * This method will create the url and list for storing the data. 
 	 * The setUpHttpPost() method will be called to connect to the server.
 	 *  */
-	public static void postInsertData() {
+	public void postInsertData() {
 		
 //		String url = "https://deco3801-007.uqcloud.net/phpmyadmin/insertDB.php";
 		String url = "http://localhost/phpmyadmin/insertDB2.php";
@@ -142,7 +142,7 @@ public class databasePush {
 	    return sb.toString();
 	}
 	
-	public static void postConnectData(){
+	public void postConnectData(){
 		String url = "https://deco3801-007.uqcloud.net/phpmyadmin/db_connect2.php";
 		
 		String username = "admin";
@@ -163,18 +163,18 @@ public class databasePush {
 	
 
 	
-	public static void main(String[] args){
-		
-		dgs.setMacAddress("94-22-00-00-11-22");
-		dgs.setSSID("	test ing 123");
-		dgs.setLatitude("-27.500780");
-		dgs.setLongtitude("153.012733");
-		dgs.setLocation("GPS South UQ");
-		
-//		postConnectData();
-		postInsertData();
-		
-		System.out.println("END");
-	}
+//	public static void main(String[] args){
+//		
+//		dgs.setMacAddress("94-22-00-00-11-22");
+//		dgs.setSSID("	test ing 123");
+//		dgs.setLatitude("-27.500780");
+//		dgs.setLongtitude("153.012733");
+//		dgs.setLocation("GPS South UQ");
+//		
+////		postConnectData();
+//		postInsertData();
+//		
+//		System.out.println("END");
+//	}
 
 }
