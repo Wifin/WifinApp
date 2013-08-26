@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -95,15 +96,13 @@ public class MainActivity extends Activity
 				   arraylist.clear();
 				   mlocal.getlocation();
 				   txtlocation.setText(mlocal.mCurrentLocation.getLatitude() + "," + mlocal.mCurrentLocation.getLongitude());
-	   
-				   setDataBaseData();
-				   
-				 //  dp.postInsertData();
-				   
 				   mwifi.scanWifi();
-				   
+
 				   //Here will go into wifi receiver
-				   mreceiver.getwifilist(MainActivity.this);	
+				   //DG: mlocal is needed for retrieving the lat and long for database input. 
+				   mreceiver.getwifilist(MainActivity.this, mlocal);	
+				   
+				   
 				   adapter.notifyDataSetChanged();
 			}
 		    });
@@ -117,9 +116,10 @@ public class MainActivity extends Activity
 					  mlocal.getlocation();
 					  
 					  if( ((Button)v).getText().equals("Start Location Service")){
-						   ((Button) v).setText("Stop Location Service");						   
+						   ((Button) v).setText("Stop Location Service");	
+						   
 						   mlocal.getupdate();
-		    	           System.out.println("222");
+//		    	           System.out.println("222");
 					   }
 					   else{
 						   mlocal.removeupdate();
@@ -157,11 +157,7 @@ public class MainActivity extends Activity
         super.onResume();
     }
 
-    private void setDataBaseData(){
-    	dgs.setLongtitude("" + mlocal.mCurrentLocation.getLongitude());
-    	dgs.setLatitude("" + mlocal.mCurrentLocation.getLatitude());
-    	System.err.println(dgs.getLongtitude());
-    	
-    }
+    
+    
 
 }

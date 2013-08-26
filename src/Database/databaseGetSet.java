@@ -10,9 +10,6 @@ public class databaseGetSet {
 	
 	private String macAddress , ssid , latitude, longtitude , strength, location;
 	
-	public databaseGetSet(){
-	}
-	
 	/**
 	 * Set values for Mac Address
 	 * */

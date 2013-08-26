@@ -15,6 +15,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.conn.SingleClientConnManager;
 import org.apache.http.message.BasicNameValuePair;
 
+import com.example.Wifin.WifiReceiver;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,8 +35,8 @@ import Database.databaseGetSet;
  * */
 public class databasePush {
 	
-	static databaseGetSet dgs = new databaseGetSet();
-	
+	//static databaseGetSet dgs = new databaseGetSet();
+	//private WifiReceiver wifiR = new WifiReceiver();
 
 	/**
 	* The method to perform the PUSH method to the server. 
@@ -77,9 +79,8 @@ public class databasePush {
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 			// Execute HTTP Post Request
 	        HttpResponse response = httpClient.execute(httppost);
-	    //    Log.e("Responce-->", "after execute the http response");
 	        
-	        System.out.println(response);
+	        System.out.println("Response:  "  + response);
 			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -99,10 +100,13 @@ public class databasePush {
 	 * This method will create the url and list for storing the data. 
 	 * The setUpHttpPost() method will be called to connect to the server.
 	 *  */
-	public void postInsertData() {
+	public void postInsertData(databaseGetSet dgs) {
 		
-//		String url = "https://deco3801-007.uqcloud.net/phpmyadmin/insertDB.php";
-		String url = "http://localhost/phpmyadmin/insertDB2.php";
+		//The url for inserting the data into the database.
+		String url = "http://deco3801-007.uqcloud.net/phpmyadmin/insertDB.php";
+		
+//		String url = "http://localhost/phpmyadmin/insertDB2.php";
+		
 	    // Add your data
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	    nameValuePairs.add(new BasicNameValuePair("WifiMacAddress", dgs.getMacAddress()));
@@ -111,39 +115,18 @@ public class databasePush {
 	    nameValuePairs.add(new BasicNameValuePair("WifiLongtitude", dgs.getLongtitude()));
 	    nameValuePairs.add(new BasicNameValuePair("WifiLocation", dgs.getLocation()));
 	    
+	    System.out.println("postInsertData():  " + nameValuePairs.get(0));
+	     
 	    setUpHttpPost(url,nameValuePairs);
-	   // System.out.println(nameValuePairs);
+	   
+	   
 	        
 	}//end of postInsertData()
 	
-	private static String displayResponse(HttpResponse res) throws IOException{
-		
-		InputStream inputStream = res.getEntity().getContent();
-		
-		InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-		BufferedReader reader = new BufferedReader(inputStreamReader);
-	    StringBuilder sb = new StringBuilder();
-
-	    String line = null;
-	    try {
-	        while ((line = reader.readLine()) != null) {
-	            sb.append((line + "\n"));
-	        }
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	    } finally {
-	        try {
-	        	inputStreamReader.close();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-	    }
-	    return sb.toString();
-	}
+	
 	
 	public void postConnectData(){
-		String url = "https://deco3801-007.uqcloud.net/phpmyadmin/db_connect2.php";
+		String url = "http://deco3801-007.uqcloud.net/phpmyadmin/db_connect2.php";
 		
 		String username = "admin";
 		String hostname = "localhost";
@@ -156,7 +139,7 @@ public class databasePush {
 	    nameValuePairs.add(new BasicNameValuePair("Password", hostname ));
 	    nameValuePairs.add(new BasicNameValuePair("HostName", password ));
 	    nameValuePairs.add(new BasicNameValuePair("Database", database ));
-	    System.out.println(nameValuePairs);
+//	    System.out.println(nameValuePairs);
 	    setUpHttpPost(url,nameValuePairs);
 	    
 	}
