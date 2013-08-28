@@ -9,6 +9,7 @@ public class databaseGetSet {
 	private databaseConnection dbc = new databaseConnection();
 	
 	private String macAddress , ssid , latitude, longtitude , strength, location;
+	private double distance;
 	
 	/**
 	 * Set values for Mac Address
@@ -74,11 +75,23 @@ public class databaseGetSet {
 		strength = s ;
 	}
 	/**
-	 * Get the values of the frequency
+	 * Get the values of the SignalStrength
 	 * */
 	public String getSignalStrength(){
 		return strength;
 	}
 	
+	/**
+	 * Set values for Distance
+	 * */
+	public void setDistance(Double d){
+		distance = d ;
+	}
+	/**
+	 * Get the values of the Distance
+	 * */
+	public Double getDistance(){
+		return distance;
+	}
 
 }

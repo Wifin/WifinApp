@@ -12,7 +12,7 @@ public class myWifi
 		
 		OpenWifi();
 		wifi.startScan();
-		System.out.println("wifiscan=" + wifi.startScan());
+		System.out.println("wifiscan= " + wifi.startScan());
 		
 		
 	}

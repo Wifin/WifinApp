@@ -57,21 +57,6 @@ public class databasePush {
 	* 		IOException - HttpClient not getting the right input.
 	* */
 	private void setUpHttpPost(String url,  List<NameValuePair> nameValuePairs){
-//		HostnameVerifier hostnameVerifier = org.apache.http.conn.ssl.SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER;
-//
-//		DefaultHttpClient client = new DefaultHttpClient();
-//
-//		SchemeRegistry registry = new SchemeRegistry();
-//		SSLSocketFactory socketFactory = SSLSocketFactory.getSocketFactory();
-//		socketFactory.setHostnameVerifier((X509HostnameVerifier) hostnameVerifier);
-//		registry.register(new Scheme("https", socketFactory, 443));
-//		SingleClientConnManager mgr = new SingleClientConnManager(client.getParams(), registry);
-//		DefaultHttpClient httpClient = new DefaultHttpClient(mgr, client.getParams());
-//
-//		// Set verifier     
-//		HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
-
-	    // Create a new HttpClient and Post Header
 	    HttpClient httpClient = new DefaultHttpClient();   
 	    HttpPost httppost = new HttpPost(url);
 	    
@@ -80,7 +65,7 @@ public class databasePush {
 			// Execute HTTP Post Request
 	        HttpResponse response = httpClient.execute(httppost);
 	        
-	        System.out.println("Response:  "  + response);
+	        System.out.println("Response:  "  + response.getEntity() + " for mac address: "  + nameValuePairs.get(0));
 			
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
@@ -115,12 +100,10 @@ public class databasePush {
 	    nameValuePairs.add(new BasicNameValuePair("WifiLongtitude", dgs.getLongtitude()));
 	    nameValuePairs.add(new BasicNameValuePair("WifiLocation", dgs.getLocation()));
 	    
-	    System.out.println("postInsertData():  " + nameValuePairs.get(0));
+	//    System.out.println("postInsertData():  " + nameValuePairs.get(0));
 	     
 	    setUpHttpPost(url,nameValuePairs);
-	   
-	   
-	        
+
 	}//end of postInsertData()
 	
 	
@@ -147,7 +130,7 @@ public class databasePush {
 
 	
 //	public static void main(String[] args){
-//		
+//		databaseGetSet dgs = new databaseGetSet();
 //		dgs.setMacAddress("94-22-00-00-11-22");
 //		dgs.setSSID("	test ing 123");
 //		dgs.setLatitude("-27.500780");
@@ -155,7 +138,7 @@ public class databasePush {
 //		dgs.setLocation("GPS South UQ");
 //		
 ////		postConnectData();
-//		postInsertData();
+//		postInsertData(dgs);
 //		
 //		System.out.println("END");
 //	}

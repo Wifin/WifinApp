@@ -46,8 +46,6 @@ public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks,
     {
     	if(mLocationClient!=null && mLocationClient.isConnected()){
     		 mCurrentLocation = mLocationClient.getLastLocation();
-    		 
-    		 
 		   }
     }
     
