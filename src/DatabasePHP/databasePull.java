@@ -23,36 +23,35 @@ import org.json.JSONException;
 import org.json.JSONObject;
  
 import Database.databaseJSON;
-
+/**
+ * This class will be performing the query function.
+ * 
+ * NOTE: This class is not working yet, still in the progress of implementing.
+ * */
 public class databasePull {
- 
-    static InputStream is = null;
-    static JSONObject jObj;
-    static String json = "";
+	
+    private InputStream is = null;
+    private JSONObject jObj;
+    private String json = "";
  
     // constructor
     public databasePull() {
- 
     }
     
-    private static JSONObject setUpHttpPull(String url,  List<NameValuePair> nameValuePairs){
+    private JSONObject setUpHttpPull(String url,  List<NameValuePair> nameValuePairs){
 	    try {
 	        DefaultHttpClient httpClient = new DefaultHttpClient();
            // String paramString = URLEncodedUtils.format(nameValuePairs, "utf-8");
             HttpGet httpGet = new HttpGet(url);
             HttpResponse httpResponse = httpClient.execute(httpGet);
             System.out.println(httpResponse.getEntity());
-//            HttpEntity httpEntity = httpResponse.getEntity();
-//            is = httpEntity.getContent();
-//            StatusLine statusLine = httpResponse.getStatusLine();
-//            int statusCode = statusLine.getStatusCode();
-//            if (statusCode == 200) {
-            	 HttpEntity httpEntity = httpResponse.getEntity();
-                 is = httpEntity.getContent();
-                 StringBuilder builder = new StringBuilder();
-              BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-              String line;
-              while ((line = reader.readLine()) != null) {
+
+            HttpEntity httpEntity = httpResponse.getEntity();
+            is = httpEntity.getContent();
+            StringBuilder builder = new StringBuilder();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(is));
+            String line;
+            while ((line = reader.readLine()) != null) {
                 builder.append(line);
               }
               is.close();
@@ -86,7 +85,7 @@ public class databasePull {
 	 * This method will create the url and list for storing the data. 
 	 * The setUpHttpPost() method will be called to connect to the server.
 	 *  */
-	public static void pullQueryDB() {
+	public void pullQueryDB() {
 		
 		//The url for inserting the data into the database.
 		String url = "http://deco3801-007.uqcloud.net/phpmyadmin/queryDB.php";
@@ -96,7 +95,7 @@ public class databasePull {
 	    // Add your data
 	    List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
 	    
-	    JSONObject jobj = setUpHttpPull(url,nameValuePairs);
+	    JSONObject obj = setUpHttpPull(url,nameValuePairs);
 
 //		try {
 //			JSONArray dataArray = jobj.getJSONArray("Wifi");
@@ -108,14 +107,13 @@ public class databasePull {
 		
 		//JSONObject data = jArray.
 
-	}//end of postInsertData()
+	}//end of pullQueryDB()
 	
-	public static void main(String[] args){
-		
-			pullQueryDB();
-	
-		
-	}
+	//Testing purposes.
+//	public static void main(String[] args){
+//			pullQueryDB();
+//
+//	}
  
 }
  

@@ -89,8 +89,7 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 	 * @param loc - the interface of myLocation
 	 * 
 	 */
-	public void getwifilist (MainActivity ma, myLocation loc)
-	{
+	public void getwifilist (MainActivity ma, myLocation loc){
 		// need to explain briefly this loop does what ? 
 		if (wifilist!=null)
 		{	
@@ -110,10 +109,13 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 			    //rounding off the distance to 2 decimal point.
 			    distance = (Math.round(distance*100))/100.0;
 			    System.out.println("Distance : "  +distance);
-			    
-		       	//DG: input the data to the database using the get/set methods.	 
-			   	dgs.setMacAddress((String)wifilist.get(size).BSSID);
+
+			    //The set methods to pass the wifi details to the database.
+			   	dgs.setMacAddress(""+ wifilist.get(size).BSSID);
+			   	dgs.setDistance("" + distance);
+			   	dgs.setSignalStrength( "" + ap_feq);
 		       	dgs.setSSID((String) wifilist.get(size).SSID);
+		       	//Calling the method to pass the lat/long.
 		       	setDataBaseData(loc);
 
 		       	HashMap<String, String> item = new HashMap<String, String>();
@@ -132,15 +134,6 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 		}//end of if loop
 	}//end of getwifilist()
 	
-//	class compareSignalStrength implements Comparator<ScanResult>{
-//
-//		@Override
-//		public int compare(ScanResult lhs, ScanResult rhs) {
-//			// TODO Auto-generated method stub
-//			return (lhs.level < rhs.level ? -1 : (lhs.level==rhs.level ? 0 : 1));
-//		}
-//	}
-	
 	/** 
 	 * ScanResult sorted by signal level
 	 * 
@@ -156,15 +149,15 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 	 * @param mlocal - instance of myLocation
 	 * */
 	private void setDataBaseData(myLocation mlocal){
+		//Passing the values of longitude and latitude for database.
     	dgs.setLongtitude("" + mlocal.mCurrentLocation.getLongitude());
     	dgs.setLatitude("" + mlocal.mCurrentLocation.getLatitude());
     	
+    	//Calling the Async class to execute the connection to database.
     	new updateDatabase().execute("");
     	
-    	System.out.println("Wifi Details: " + dgs.getMacAddress() + ", " + dgs.getSSID()  + ", " + dgs.getLatitude()
-    			 + ", " + dgs.getLongtitude() + ", "+ dgs.getLocation());
-
-    	
+//    	System.out.println("Wifi Details: " + dgs.getMacAddress() + ", " + dgs.getSSID()  + ", " + dgs.getLatitude()
+//    			 + ", " + dgs.getLongtitude() + ", "+ dgs.getLocation());
     }
 	
 	/**
@@ -174,12 +167,8 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			//System.out.println("ASYNCTASK");
-//			String url = "https://deco3801-007.uqcloud.net/phpmyadmin/insertDB.php";
-			
+			//Calling the postInsertData method which will update the database.
 			dp.postInsertData(dgs);
-				
-		//	System.out.println("ASYNCTASK done");
 			return null;
 		}// end of doInBackground
 	}//end of updateDatabase class
@@ -191,14 +180,10 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 		@Override
 		protected String doInBackground(String... params) {
 			// TODO Auto-generated method stub
-			//System.out.println("ASYNCTASK");
-//			String url = "https://deco3801-007.uqcloud.net/phpmyadmin/insertDB.php";
-			
+			//Calling the pullQueryDB method which will update the database.
 			dpull.pullQueryDB();
-				
-		//	System.out.println("ASYNCTASK done");
 			return null;
 		}// end of doInBackground
-	}//end of updateDatabase class
+	}//end of queryDatabase class
 
 }
