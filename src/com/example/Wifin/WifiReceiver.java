@@ -90,25 +90,27 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 	 * 
 	 */
 	public void getwifilist (MainActivity ma, myLocation loc){
-		// need to explain briefly this loop does what ? 
+		// this loop is for calculating distance & putting them 
+		// with WiFi information to arraylist
 		if (wifilist!=null)
 		{	
 		try {
 			size = wifilist.size()-1;
 	        while (size >= 0) 
 	    	{	
-	        	//DG: Some sort of mechanism is required to check for the BSSID
-//	        	 if(!item.containsValue(ma.ITEM_KEY)){
-	        	
-	        	//All this also need to explain abit
+	        	//get signal strength from wifilist    
 	        	ap_rssi = Double.valueOf(wifilist.get(size).level);
+	        	
+	        	//get signal frequency from wifilist    
 	        	ap_feq = Double.valueOf(wifilist.get(size).frequency);
 	        	ssid = String.valueOf(wifilist.get(size).SSID);
+	        	
+	        	//calculate distance between you and AP
 			    distance = Math.pow(10, (Math.abs(ap_rssi)-
 			    			20*Math.log10(ap_feq)-32.44)/20)*1000;
+			    
 			    //rounding off the distance to 2 decimal point.
 			    distance = (Math.round(distance*100))/100.0;
-			    System.out.println("Distance : "  +distance);
 
 			    //The set methods to pass the wifi details to the database.
 			   	dgs.setMacAddress(""+ wifilist.get(size).BSSID);
@@ -118,31 +120,21 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
 		       	//Calling the method to pass the lat/long.
 		       	setDataBaseData(loc);
 
+		       	//Create a hashmap and store wifi information
 		       	HashMap<String, String> item = new HashMap<String, String>();
-		       	item.put(ma.ITEM_KEY, wifilist.get(size).SSID + wifilist.get(size).level +"\n"+"Distance:"+  distance +"m");
+		       	item.put(ma.ITEM_KEY, wifilist.get(size).SSID + wifilist.get(size).level 
+		       			+"\n"+"Distance:"+  distance +"m");
 		        System.out.println();
 				if(ma.arraylist.size() < 4 ){
 					ma.arraylist.add(item);
-				//	Collections.sort(ma.arraylist);
 				}//end of if arraysize < 5
 				size--;	
-//		    	  }// end of if(item.contain) 
 			    }// end of while loop
 			}
 			catch (Exception e) {
 			}
 		}//end of if loop
 	}//end of getwifilist()
-	
-	/** 
-	 * ScanResult sorted by signal level
-	 * 
-	 */
-//	@Override
-//	public int compare(ScanResult lhs, ScanResult rhs) {
-//		// TODO Auto-generated method stub
-//		return (lhs.level < rhs.level ? -1 : (lhs.level==rhs.level ? 0 : 1));
-//	}
 	/**
 	 * This method will perform the updating of the database. 
 	 * 
@@ -154,10 +146,7 @@ public class WifiReceiver extends BroadcastReceiver //implements Comparator<Scan
     	dgs.setLatitude("" + mlocal.mCurrentLocation.getLatitude());
     	
     	//Calling the Async class to execute the connection to database.
-    	new updateDatabase().execute("");
-    	
-//    	System.out.println("Wifi Details: " + dgs.getMacAddress() + ", " + dgs.getSSID()  + ", " + dgs.getLatitude()
-//    			 + ", " + dgs.getLongtitude() + ", "+ dgs.getLocation());
+    	new updateDatabase().execute("");;
     }
 	
 	/**
