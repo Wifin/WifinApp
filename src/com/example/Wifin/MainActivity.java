@@ -5,12 +5,14 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentFilter;
+import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
@@ -51,20 +53,14 @@ public class MainActivity extends Activity
     SimpleAdapter adapter;
     
     /**
-     * button for getting location and wifi information
+     * button for activate AR camera
      */
-    Button btn_loc;
+    ImageButton btn_cam;
     
-
 	/**
      * button for enable update location services
      */
-    Button btn_ser;
-    
-    /**
-     * button for get ap's location
-     */
-    Button bnt_aploc;
+    ImageButton btn_map;
     
     /**
      * call service classes
@@ -72,111 +68,63 @@ public class MainActivity extends Activity
     myLocation mlocal;
     myWifi mwifi;
     WifiReceiver mreceiver;
-    apLocation aploc;
-    
     
     /**
      * Base on content view Wifin/res/layout/activity_main.xml, execute once program run
      */
     @Override
 	public void onCreate(Bundle savedInstanceState)
-	{
-	    
+	{	    
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
-		txtlocation= (TextView) findViewById(R.id.locView);
-		txtaploc = (TextView) findViewById(R.id.aplocView);
-		wifi_lv =(ListView)findViewById(R.id.listView_wifi);
-		arraylist = new ArrayList<HashMap<String, String>>();
-		ITEM_KEY = "key";	
-		adapter = new SimpleAdapter(this, arraylist, android.R.layout.simple_list_item_1,new String[] { ITEM_KEY },new int[] { android.R.id.text1 });
-		btn_loc  = (Button) this.findViewById(R.id.button_location);
-		btn_ser = (Button) this.findViewById(R.id.button_services);
-		bnt_aploc = (Button) this.findViewById(R.id.button_aploc);
+		btn_cam = (ImageButton) findViewById(R.id.button_camera);
+		btn_map = (ImageButton) findViewById(R.id.button_map);
 		
-		//call each class
-		mlocal = new myLocation();
 		mwifi =new myWifi();
 		mreceiver =new WifiReceiver();
-		aploc = new apLocation();
-		
-		//call method checkGoogleplay() from class myLocation
-		mlocal.checkGoogleplay(this);
-		
-		//set adapter to ListView wifi_lv
-		wifi_lv.setAdapter(adapter);
+		//mlocal = new myLocation();
+		//mlocal.checkGoogleplay(this);
 		
 		//declare variable "wifi" for myWifi.java
-		mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		
-		
+	    mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
+		//start scan wifi
+        mwifi.scanWifi();
+        //mlocal.getlocation();
+        
 		/** 
 		 * following are three button onClick Listener
 		 * **
 		 */
-		btn_loc.setOnClickListener(new View.OnClickListener() {
+		btn_cam.setOnClickListener(new View.OnClickListener() {
 		    
 		    @Override
 	        public void onClick(View v) 
-		    {				
-		      
-		    	//clean previously arraylist
-		    	arraylist.clear();
-		    	
-		    	//get location
-		        mlocal.getlocation(); 
-		        
-		        //display location information to Textview
-		        txtlocation.setText(mlocal.mCurrentLocation.getLatitude() + "," + mlocal.mCurrentLocation.getLongitude());
-			    
-		        //start scan wifi
-		        mwifi.scanWifi();
-			    
-			    //call getwifilist() getting wifi info and calculate distance
-			    mreceiver.getwifilist(MainActivity.this, mlocal);
-			    
-			    adapter.notifyDataSetChanged();
+		    {						    	
+		    	  Intent i = new Intent();
+		    	  i.setAction(Intent.ACTION_VIEW);
+		    	  //url of our JSON file.
+		    	  String url = "http://deco3801-007.uqcloud.net/mixare/testJSON.json";
+		    	  i.setDataAndType(Uri.parse(url), "application/mixare-json");
+		    	  startActivity(i);
 			 }
 		 });
+		
+        btn_map.setOnClickListener(new View.OnClickListener() {
 		    
-		    
-		 btn_ser.setOnClickListener(new View.OnClickListener() {			
-			
-		     @Override
-			 public void onClick(View v) {
-				
-			     mlocal.getlocation();
-					  
-				 if( ((Button)v).getText().equals("Start Location Service"))
-				 {
-					 ((Button) v).setText("Stop Location Service");						   
-					 mlocal.getupdate();
-					
-					 }
-			     else
-			     {
-				     mlocal.removeupdate();
-				     ((Button) v).setText("Start Location Service");
-					 }
-				  }
-	      });		    
-			
-		  bnt_aploc.setOnClickListener(new View.OnClickListener() {
-				
-		      @Override
-			  public void onClick(View v) {
-				
-				  txtaploc.setText(aploc.getlatitude()+","+aploc.getlongitude());					
-			
-			  }
-	      });		
-		    		    
+		    @Override
+	        public void onClick(View v) 
+		    {	
+		    	//onClick link to Google Map activity
+		    	Intent i = new Intent(MainActivity.this, myMap.class);
+		        startActivity(i);
+			 }
+		 });		    		    
 	    	    	  	  	    
 	  }
     
     /** 
-	 * wifi receiver onPause
+	 * wifi receiver listener onPause
 	 * **
 	 */
   	protected void onPause() 
@@ -186,7 +134,7 @@ public class MainActivity extends Activity
       }
 
   	/** 
-	 * wifi receiver onResume
+	 * wifi receiver listener onResume
 	 * **
 	 */
     protected void onResume() 

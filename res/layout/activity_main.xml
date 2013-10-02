@@ -6,62 +6,29 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@color/background"
     tools:context=".MainActivity" >
 
-    <TextView
-        android:id="@+id/textView_status"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="" />
+    <ImageButton
+        android:id="@+id/button_camera"
+        android:layout_width="215.2008dip"
+        android:layout_height="59.8169dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="69dp"
+        android:background="@drawable/camera"
+        android:contentDescription="@string/camera_description"
+        android:scaleType="fitCenter" />
 
-    <TextView
-        android:id="@+id/locView"
-        android:layout_below="@+id/textView_status"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="0.0,0.0"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
+    <ImageButton
+        android:id="@+id/button_map"
+        android:layout_width="215.2008dip"
+        android:layout_height="59.8169dip"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/button_camera"
+        android:layout_marginTop="81dp"
+        android:background="@drawable/map"
+        android:contentDescription="@string/map_description"
+        android:scaleType="fitCenter" />
     
-    <Button
-            android:id="@+id/button_location"
-            android:layout_below="@+id/locView"
-            android:layout_width="191dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:text="Record loc and wifi" />
-    
-    <Button
-            android:id="@+id/button_services"
-            android:layout_below="@+id/button_location"
-            android:layout_width="191dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:text="Start Location Service" />
-    
-    <TextView
-        android:id="@+id/aplocView"
-        android:layout_below="@+id/button_services"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Apname:0.0,0.0"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-    
-    <Button
-            android:id="@+id/button_aploc"
-            android:layout_below="@+id/aplocView"
-            android:layout_width="191dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal|top"
-            android:text="Calculate APinList location" />
-
-    <ListView
-        android:id="@+id/listView_wifi"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button_aploc"
-        android:layout_toRightOf="@+id/button_aploc" >
-
-    </ListView>
-
 </RelativeLayout>

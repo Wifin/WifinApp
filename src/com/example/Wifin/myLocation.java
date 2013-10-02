@@ -19,8 +19,8 @@ import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 
-public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks
-	,GooglePlayServicesClient.OnConnectionFailedListener,LocationListener
+public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks,
+GooglePlayServicesClient.OnConnectionFailedListener,LocationListener
 {
 	/** 
 	 * log tag for google-play services connection status
@@ -81,10 +81,16 @@ public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks
 	 */
 	public void getlocation()
     {
-    	if(mLocationClient!=null && mLocationClient.isConnected())
+    	if(mLocationClient!=null && mLocationClient.isConnected()==true)
     	{
+    		Log.d("Location Updates",
+                    "locationClient is connected");
             mCurrentLocation = mLocationClient.getLastLocation();
-		   }
+		}
+    	else{
+    		Log.d("Location Updates",
+                    "locationClient can't connected :(");
+    	}
     }//end of getlocation
     
 	/** 
@@ -126,7 +132,6 @@ public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks
 	 */
 	@Override
 	public void onConnectionFailed(ConnectionResult arg0) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onConnectionFailed");
 		//txtstatus.setText("Connection Status : Fail");
 	}
@@ -138,7 +143,6 @@ public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks
 	 */
 	@Override
 	public void onConnected(Bundle connectionHint) {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onConnected");
 		//txtstatus.setText("Connection Status : Connected");		
 	}
@@ -150,10 +154,10 @@ public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks
 	 */
 	@Override
 	public void onDisconnected() {
-		// TODO Auto-generated method stub
 		Log.i(TAG, "onDisconnected");
 		//txtstatus.setText("Connection Status : Disconnected");
 	}
+    
 		
 	/** 
 	 * Location changed listener for LocationListener
@@ -164,7 +168,6 @@ public class myLocation implements GooglePlayServicesClient.ConnectionCallbacks
 	 */
 	@Override
 	public void onLocationChanged(Location mlocation) {
-		// TODO Auto-generated method stub
 		// location onChanged listener
 		
 	}
