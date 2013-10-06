@@ -30,6 +30,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.IntentFilter;
 import android.graphics.Color;
 import android.location.Location;
 import android.net.wifi.WifiConfiguration;
@@ -50,10 +51,15 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
 	    protected GoogleMap map;
 	    
 	    final Context c = this;
+	    myWifi mwifi;
  
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
+	        mwifi=new myWifi();
+	        mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
+	        mwifi.scanWifi(c);
+	        
 	        if(isgoogleplay())
 	        {
 	            setContentView(R.layout.activity_map);
@@ -96,9 +102,17 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
 	 
 	    @Override
 	    protected void onResume() {
+	    	registerReceiver(mwifi, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
 	        super.onResume();
 	        setUpMapIfNeeded();
 	    }
+	    
+	    @Override
+	    protected void onPause() 
+	  	{
+	        unregisterReceiver(mwifi);
+	        super.onPause();
+	      }
 	 
 	    private void setUpMapIfNeeded() {
 	    	 //initialize map here
@@ -108,14 +122,6 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
 	            if (map != null) {
 	                setUpMap();
 			    	map.setMyLocationEnabled(true);
-			    	//locationclient = new LocationClient(this,this,this);
-			    	//locationclient.connect();
-			    	
-			    	//Location loc =locationclient.getLastLocation();
-					//make this "location client" location update service open
-					//enableupdate(locationclient);
-					//monitor the changes of current location and do move action
-					//onLocationChanged(loc);
 	            }
 	        }
 	    }

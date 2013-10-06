@@ -4,11 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -63,13 +60,6 @@ public class MainActivity extends Activity
     ImageButton btn_map;
     
     /**
-     * call service classes
-     */
-    myLocation mlocal;
-    myWifi mwifi;
-    WifiReceiver mreceiver;
-    
-    /**
      * Base on content view Wifin/res/layout/activity_main.xml, execute once program run
      */
     @Override
@@ -80,17 +70,6 @@ public class MainActivity extends Activity
 		
 		btn_cam = (ImageButton) findViewById(R.id.button_camera);
 		btn_map = (ImageButton) findViewById(R.id.button_map);
-		
-		mwifi =new myWifi();
-		mreceiver =new WifiReceiver();
-		//mlocal = new myLocation();
-		//mlocal.checkGoogleplay(this);
-		
-		//declare variable "wifi" for myWifi.java
-	    mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
-		//start scan wifi
-        mwifi.scanWifi();
-        //mlocal.getlocation();
         
 		/** 
 		 * following are three button onClick Listener
@@ -122,26 +101,6 @@ public class MainActivity extends Activity
 		 });		    		    
 	    	    	  	  	    
 	  }
-    
-    /** 
-	 * wifi receiver listener onPause
-	 * **
-	 */
-  	protected void onPause() 
-  	{
-        unregisterReceiver(mreceiver);
-        super.onPause();
-      }
-
-  	/** 
-	 * wifi receiver listener onResume
-	 * **
-	 */
-    protected void onResume() 
-    {
-        registerReceiver(mreceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-        super.onResume();
-      }
     
     /** 
 	 * option menu
