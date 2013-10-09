@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -59,6 +62,8 @@ public class MainActivity extends Activity
      */
     ImageButton btn_map;
     
+    myWifi mwifi;
+    
     /**
      * Base on content view Wifin/res/layout/activity_main.xml, execute once program run
      */
@@ -70,6 +75,9 @@ public class MainActivity extends Activity
 		
 		btn_cam = (ImageButton) findViewById(R.id.button_camera);
 		btn_map = (ImageButton) findViewById(R.id.button_map);
+		mwifi=new myWifi();
+        mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
+        mwifi.scanWifi(this);
         
 		/** 
 		 * following are three button onClick Listener
@@ -83,7 +91,7 @@ public class MainActivity extends Activity
 		    	  Intent i = new Intent();
 		    	  i.setAction(Intent.ACTION_VIEW);
 		    	  //url of our JSON file.
-		    	  String url = "http://deco3801-007.uqcloud.net/mixare/testJSON.json";
+		    	  String url = "file:///storage/emulated/0/Android/data/com.example.Wifin/cache/testJson.json";
 		    	  i.setDataAndType(Uri.parse(url), "application/mixare-json");
 		    	  startActivity(i);
 			 }
@@ -101,6 +109,19 @@ public class MainActivity extends Activity
 		 });		    		    
 	    	    	  	  	    
 	  }
+    
+    @Override
+    protected void onResume() {
+    	registerReceiver(mwifi, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+        super.onResume();
+    }
+    
+    @Override
+    protected void onPause() 
+  	{
+        unregisterReceiver(mwifi);
+        super.onPause();
+      }
     
     /** 
 	 * option menu
