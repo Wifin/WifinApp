@@ -1,5 +1,6 @@
 package com.example.Wifin;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -64,6 +65,8 @@ public class MainActivity extends Activity
     
     myWifi mwifi;
     
+    DataBaseHelper dbhelp;
+    
     /**
      * Base on content view Wifin/res/layout/activity_main.xml, execute once program run
      */
@@ -75,9 +78,22 @@ public class MainActivity extends Activity
 		
 		btn_cam = (ImageButton) findViewById(R.id.button_camera);
 		btn_map = (ImageButton) findViewById(R.id.button_map);
-		mwifi=new myWifi();
-        mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
-        mwifi.scanWifi(this);
+		
+		dbhelp = new DataBaseHelper(this);
+		
+		try {
+			   dbhelp.createDataBase();
+			}
+	    catch (IOException e) {
+			e.printStackTrace();
+		}   
+		
+		if(dbhelp.checkDataBase()){
+			mwifi=new myWifi();
+	        mwifi.wifi= (WifiManager) getSystemService(Context.WIFI_SERVICE);
+	        mwifi.scanWifi(this); 
+		}
+		else{System.out.println("got problem to download database");}
         
 		/** 
 		 * following are three button onClick Listener

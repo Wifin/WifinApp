@@ -50,6 +50,8 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
 	    final Context c = this;	    
 	    private static final String PATH = "/storage/emulated/0/Android/data/com.example.Wifin/cache/testJson.json";
 	    //myWifi mwifi;
+	    EditText password;
+	    wifiConnect wc;
  
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
@@ -80,7 +82,10 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
 						.setPositiveButton("Connect",new DialogInterface.OnClickListener() {
 							public void onClick(DialogInterface dialog,int id) {
 								// if this button is clicked,start connect wifi
-								wificonnector(ssid);
+								password = (EditText) findViewById(R.id.password);
+								wc=new wifiConnect();
+								wc.wificonnector(password, ssid, c);
+//								wificonnector(ssid);
 							}
 						  })
 						.setNegativeButton("Cancel",new DialogInterface.OnClickListener() {
@@ -217,33 +222,6 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener {
 	                radius -= 30;
 	             
 	        }
-	    }
-	    
-	    /*
-	     * connect WiFi method
-	     **/
-	    public void wificonnector(String ssid) 
-	    {	    	
-	    	EditText password = (EditText) findViewById(R.id.password);
-	    	//get ssid from marker title
-	    	String networkSSID = ssid;
-	    	WifiConfiguration conf = new WifiConfiguration();
-	    	conf.SSID = "\"" + networkSSID + "\"";
-	    	conf.preSharedKey = "\""+ password +"\"";
-	    	//add conf to Android wifi manager
-	    	WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE); 
-	    	wifiManager.addNetwork(conf);
-	    	
-	    	List<WifiConfiguration> list = wifiManager.getConfiguredNetworks();
-	    	for( WifiConfiguration i : list ) {
-	    	    if(i.SSID != null && i.SSID.equals(conf.SSID)) {
-	    	         wifiManager.disconnect();
-	    	         wifiManager.enableNetwork(i.networkId, true);
-	    	         wifiManager.reconnect();              
-	    	         
-	    	         break;
-	    	    }           
-	    	 }
 	    }
 	   
 		@Override
