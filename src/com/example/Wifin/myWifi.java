@@ -21,7 +21,7 @@ import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.util.JsonWriter;
 
-public class myWifi extends BroadcastReceiver
+public class  myWifi extends BroadcastReceiver
 {
 	/** 
 	 * Variable for managing all wifi aspects of WiFi connectivity
@@ -146,7 +146,8 @@ public class myWifi extends BroadcastReceiver
 	 		    Double lat = cur.getDouble(cur.getColumnIndex("lat"));
 	 		    Double lon = cur.getDouble(cur.getColumnIndex("lon"));
 	 		    int level = wifilist.get(count).level;
-			    apinfo aps= new apinfo(lat,lon,ssid,level,mac);
+	 		    String ctype=wifilist.get(count).capabilities;
+			    apinfo aps= new apinfo(lat,lon,ssid,level,mac,ctype);
      		    try 
      		    {
      		        writeLocation(writer,aps);
@@ -171,7 +172,8 @@ public class myWifi extends BroadcastReceiver
 	 * **
 	 */	
 	public void writeLocation(JsonWriter writer,apinfo ap) throws IOException {
-	     writer.beginObject();	     
+	     writer.beginObject();
+	     writer.name("id").value(String.valueOf(count));
 	     writer.name("lat").value(String.valueOf(ap.getlat()));
 	     writer.name("lng").value(String.valueOf(ap.getlon()));
 	     writer.name("elevation").value("0");
@@ -181,6 +183,7 @@ public class myWifi extends BroadcastReceiver
 	     writer.name("webpage").value("");
 	     writer.name("level").value(ap.getlevel());
 	     writer.name("mac").value(ap.getmac());
+	     writer.name("capabilities").value(ap.getctype());
 	     writer.endObject();
 	 }
 		

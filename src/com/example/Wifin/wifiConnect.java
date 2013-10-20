@@ -4,11 +4,14 @@ import java.util.List;
 
 import android.content.Context;
 import android.net.wifi.WifiConfiguration;
+import android.net.wifi.WifiEnterpriseConfig;
 import android.net.wifi.WifiManager;
+import android.net.wifi.WifiConfiguration.KeyMgmt;
 import android.widget.EditText;
 
 public class wifiConnect {
-	public void wificonnector(EditText password,String ssid,Context c) 
+	
+	public void connectWPA(EditText password,String ssid,Context c) 
     {
     	//get ssid from marker title
     	String networkSSID = ssid;
@@ -30,4 +33,18 @@ public class wifiConnect {
     	    }           
     	 }
     }
+	
+	public void connectEAP(EditText username,EditText password,String ssid,Context c)
+	{
+	    WifiEnterpriseConfig enterpriseConfig = new WifiEnterpriseConfig(); 
+	    WifiConfiguration wifiConfig = new WifiConfiguration();
+		wifiConfig.SSID = ssid; 
+		wifiConfig.allowedKeyManagement.set(KeyMgmt.WPA_EAP);
+		wifiConfig.allowedKeyManagement.set(KeyMgmt.IEEE8021X);
+		enterpriseConfig.setIdentity("\""+ username +"\"");
+		enterpriseConfig.setPassword("\""+ password +"\"");
+		enterpriseConfig.setEapMethod(WifiEnterpriseConfig.Eap.PEAP); 
+		wifiConfig.enterpriseConfig = enterpriseConfig;
+		
+	}
 }

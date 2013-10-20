@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources>    
+    <color name="background">#CBCFD5</color>
+    <color name="line_ruler_colour">#9D9FA2</color>
+    <color name="home_text">#616973</color>
+    <color name="home_subtitle">#6E7175</color>
+    
+    <color name="titlebackgroundcolor">#CBCFD5</color>
+    <color name="titletextcolor">#FFFF00</color>
+    
     <string-array name="colors">        
         <item>#ff00ff00</item>
         <item>#ffc5da43</item>

@@ -7,14 +7,16 @@ public class apinfo {
 		private double lat, lon;
 		private String title,mac;
 		private int level;
+		private String ctype;
 
-		public apinfo (double lat, double lon, String title, int level,String mac) {
+		public apinfo (double lat, double lon, String title, int level,String mac,String ctype) {
 		    super();
 		    this.lat = lat;
 		    this.lon = lon;
 		    this.title = title;
 		    this.level = level;
 		    this.mac = mac;
+		    this.ctype=ctype;
 		}
 		public double getlat() {
 		    return lat;
@@ -45,5 +47,11 @@ public class apinfo {
 		}
 		public void set_mac(String str) {
 		    this.mac = str;
+		}
+		public String getctype() {
+		    return ctype;
+		}
+		public void set_ctype(String str) {
+		    this.ctype = str;
 		}
 }

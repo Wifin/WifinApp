@@ -117,7 +117,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     	Thread dx = new Thread() {
     	    public void run(){
     	        try{    	
-    	            URL url = new URL("http://14.202.106.108/db/wifin.db");  	
+    	            URL url = new URL("http://14.202.106.108/wifin.db");  	
     	            //open a connection
     	            url.openConnection();
     	
