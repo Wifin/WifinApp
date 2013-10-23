@@ -39,7 +39,6 @@ import android.view.LayoutInflater;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -58,11 +57,10 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	    // A request to connect to Location Services
 	    private LocationRequest mLocationRequest;
 	    // Stores the current instantiation of the location client in this object
-	    private LocationClient mLocationClient;
+	    LocationClient mLocationClient;
 	    
-	    int color;	    
+	    int color;
 	    
-	    private ImageButton btn_navi;
 		// define the display assembly compass picture
 	    private ImageView image;
 	    
@@ -76,8 +74,7 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	    private float bearing =0;
 	    private Location test;
 	    private float distance =0;
-	    
-	    
+	    	    
 	    @Override
 	    protected void onCreate(Bundle savedInstanceState) {
 	        super.onCreate(savedInstanceState);
@@ -112,11 +109,6 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	        
 	     // initialize your android device sensor capabilities
 	        mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-	       
-	        //testing fake location -28.001373675694754,153.41411590576172
-	        test = new Location("fakeprovider");
-	        test.setLatitude(-28.001373675694754);
-	        test.setLongitude(153.41411590576172);
 	        
 //	        btn_navi.setOnClickListener(new View.OnClickListener() {
 //			    
@@ -234,6 +226,11 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	            // Read the JSON data into the StringBuilder
 	            jsonReader jr = new jsonReader();
 	            retrieved = jr.readJsonStream(in);
+	            //create a location
+		        test = new Location("fakeprovider");
+		        test.setLatitude(retrieved.get(0).getlat());
+		        test.setLongitude(retrieved.get(0).getlon());
+	            
 	        }catch (IOException e) {
 	        	System.out.println("file not exist!!!!");
 	            Log.e(LOG_TAG, "Error connecting to service", e);

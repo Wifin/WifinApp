@@ -225,9 +225,8 @@ containing a value of this type.
         public static final int text_background=0x7f020034;
     }
     public static final class id {
-        public static final int about=0x7f050010;
-        public static final int action_settings=0x7f05000e;
-        public static final int help=0x7f05000f;
+        public static final int about=0x7f05000f;
+        public static final int help=0x7f05000e;
         public static final int home_camera_container=0x7f050007;
         public static final int home_map_container=0x7f050006;
         public static final int hybrid=0x7f050004;

@@ -8,6 +8,7 @@ public class apinfo {
 		private String title,mac;
 		private int level;
 		private String ctype;
+		private String distance;
 
 		public apinfo (double lat, double lon, String title, int level,String mac,String ctype) {
 		    super();

@@ -7,15 +7,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URL;
-import java.net.URLConnection;
-
-import org.apache.http.util.ByteArrayBuffer;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -117,7 +113,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     	Thread dx = new Thread() {
     	    public void run(){
     	        try{    	
-    	            URL url = new URL("http://14.202.106.108/wifin.db");  	
+    	            URL url = new URL("http://14.202.106.108/wifin/wifin.db");  	
     	            //open a connection
     	            url.openConnection();
     	

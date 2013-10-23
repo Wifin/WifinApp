@@ -49,6 +49,7 @@ public class jsonReader {
 	    int level = 0;
 	    String mac = null;
 	    String ctype =null;
+	    String distance = null;
 	     
 	    reader.beginObject();
 	    while (reader.hasNext()) {
@@ -65,7 +66,7 @@ public class jsonReader {
 		        mac = reader.nextString();
 	        }else if (name.equals("capabilities")) {
 	        	ctype = reader.nextString();
-	        } else {
+	        }else {
 	            reader.skipValue();
 	        }
 	     }

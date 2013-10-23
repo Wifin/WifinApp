@@ -92,9 +92,8 @@ int drawable splash 0x7f020031
 int drawable sycn 0x7f020032
 int drawable testmarker 0x7f020033
 int drawable text_background 0x7f020034
-int id about 0x7f050010
-int id action_settings 0x7f05000e
-int id help 0x7f05000f
+int id about 0x7f05000f
+int id help 0x7f05000e
 int id home_camera_container 0x7f050007
 int id home_map_container 0x7f050006
 int id hybrid 0x7f050004
