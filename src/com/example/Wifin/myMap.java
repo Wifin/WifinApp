@@ -173,7 +173,7 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	                    .getMap();
 	            if (map != null) {
 	                setUpMap();
-			    	map.setMyLocationEnabled(true);
+			    	//map.setMyLocationEnabled(true);
 	            }
 	        }
 	    }
@@ -261,19 +261,19 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	                    		aplist.get(i).getlat(),
 	                    		aplist.get(i).getlon())));
 	                
-	                if(aplist.get(i).getlevel()<-60)
+	                if(aplist.get(i).getlevel()>-65)
 	                {
-	                	color = 0xff00ff00;
+	                	color = 0x8099CC00;
 	                }
 	                
-	                if(-80<aplist.get(i).getlevel()&&aplist.get(i).getlevel()<-60)
+	                if(-80<aplist.get(i).getlevel()&&aplist.get(i).getlevel()<-65)
 	                {
-	                	color = 0xfff3e800;
+	                	color = 0x80ffbb33;
 	                }
 	                
-	                if(-80<aplist.get(i).getlevel())
+	                if(-80>aplist.get(i).getlevel())
 	                {
-	                	color = 0xFFFF0000;
+	                	color = 0x80ff4444;
 	                }
 	                
 	                map.addCircle(new CircleOptions()
@@ -282,7 +282,7 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 	    	                  aplist.get(i).getlon()))
 	    	              //.radius(radius)
 	    	              //.fillColor(Color.parseColor(allColors[n]))
-	    	                  .radius(10)
+	    	                  .radius(12)
 	    	                  .fillColor(color)
 	    	              .strokeWidth(0));
 	                
@@ -295,7 +295,7 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 			// TODO Auto-generated method stub
 			LatLng latlng = new LatLng(location.getLatitude(),location.getLongitude());			
 			map.moveCamera(CameraUpdateFactory.newLatLng(latlng));
-			map.animateCamera(CameraUpdateFactory.zoomTo(30f));
+			map.animateCamera(CameraUpdateFactory.zoomTo(12f));
 			bearing = mLocationClient.getLastLocation().bearingTo(test);
 	        distance = mLocationClient.getLastLocation().distanceTo(test);
 	        heading = (bearing-heading)*-1;
@@ -326,7 +326,7 @@ GooglePlayServicesClient.OnConnectionFailedListener,LocationListener,SensorEvent
 		@Override
 		public void onConnected(Bundle connectionHint) {
 			LatLng latlng = new LatLng(mLocationClient.getLastLocation().getLatitude(),mLocationClient.getLastLocation().getLongitude());
-	    	map.moveCamera( CameraUpdateFactory.newLatLngZoom(latlng,30f));
+	    	map.moveCamera( CameraUpdateFactory.newLatLngZoom(latlng,12f));
 	    	startPeriodicUpdates();
 		}
 
