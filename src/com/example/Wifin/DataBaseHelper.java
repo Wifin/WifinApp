@@ -15,82 +15,64 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/** 
+ * class for handling database
+ */
 public class DataBaseHelper extends SQLiteOpenHelper{
-	 
-    //The Android's default system path of your application database.
+	
+	/** 
+	 * The Android's default system path of your application database.
+	 */
     private static String DB_PATH = "/data/data/com.example.Wifin/databases/";
  
+    /** 
+	 * your database name to store location information
+	 */
     private static String DB_NAME = "wifin.db";
  
+    /** 
+	 * use SQLite database
+	 */
     private SQLiteDatabase myDataBase; 
  
+    /** 
+	 * Context for DataBaseHelper class
+	 */
     private final Context myContext;
  
     /**
      * Constructor
-     * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
-     * @param context
+     * Takes and keeps a reference of the passed context in order to access to
+     * the application assets and resources.
+     * 
+     * @param context - context for DataBaseHelper method
      */
     public DataBaseHelper(Context context) {
- 
     	super(context, DB_NAME, null, 1);
         this.myContext = context;
-    }	
- 
-  /**
-     * Creates a empty database on the system and rewrites it with your own database.
-     * */
-    public void createDataBase() throws IOException{
- 
-//   	    if(checkDataBase()){
-//    		//do nothing - database already exist
-//    	}else{
- 
-    		//By calling this method and empty database will be created into the default system path
-               //of your application so we are gonna be able to overwrite that database with our database.
-        	this.getReadableDatabase();
- 
-        	try {
- 
-    			copyDataBase();
- 
-    		} catch (IOException e) {
- 
-        		throw new Error("Error copying database");
- 
-        	}
-//    	}
- 
     }
- 
-    /**
-     * Check if the database already exist to avoid re-copying the file each time you open the application.
-     * @return true if it exists, false if it doesn't
-     */
-//    private boolean checkDataBase(){
-// 
-//    	SQLiteDatabase checkDB = null;
-// 
-//    	try{
-//    		String myPath = DB_PATH + DB_NAME;
-//    		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
-// 
-//    	}catch(SQLiteException e){
-// 
-//    		//database does't exist yet.
-// 
-//    	}
-// 
-//    	if(checkDB != null){
-// 
-//    		checkDB.close();
-// 
-//    	}
-//    	
-//    	//if DB not null return true, else fasle
-//    	return checkDB != null ? true : false;
-//    }
     
+    /**
+    * Creates a empty database on the system and rewrites it with your own database.
+    */
+    public void createDataBase() throws IOException{
+    	
+    	//By calling this method and empty database will be created into the default system path
+        //of your application so we are gonna be able to overwrite that database with our database.
+        this.getReadableDatabase();
+        
+        //try to copy database to DB_PATH directory
+        try {
+        	copyDataBase();
+        	} catch (IOException e) {
+        		throw new Error("Error copying database");
+        		}
+        }
+    
+    /**
+     * boolean method to check whether database existing
+     * @return if database exist in that place, return true, if not return false
+     */
     public boolean checkDataBase(){
     	String myPath = DB_PATH + DB_NAME;
         File file = new File(myPath);
@@ -105,15 +87,15 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     /**
      * Copies your database from your local assets-folder to the just created empty database in the
      * system folder, from where it can be accessed and handled.
-     * This is done by transfering bytestream.
-     * */
+     * This is done by transferring byte stream.
+     */
     public void copyDataBase() throws IOException{
- 
-    	//url of my webserver link point to my db
+    	
+    	//URL of my web server linked to my database source file
     	Thread dx = new Thread() {
     	    public void run(){
     	        try{    	
-    	            URL url = new URL("http://14.202.106.108/wifin/wifin.db");  	
+    	            URL url = new URL("your db file location");  	
     	            //open a connection
     	            url.openConnection();
     	
@@ -149,6 +131,9 @@ public class DataBaseHelper extends SQLiteOpenHelper{
  
     }
  
+    /**
+     * open database
+     */
     public void openDataBase() throws SQLException{
  
     	//Open the database
@@ -158,7 +143,12 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     }
     
     /**
-     * database query select mac and ssid, get lat and lon
+     * Database query by select mac and ssid, get lat and lon
+     * 
+     * @param mac - MAC address for access point
+     * @param ssid - SSID name for access point
+     * 
+     * @return cur - all informations about this access point(mac,ssid,lat,lon).
      * */
     public Cursor wifinquery(String mac,String ssid)            
     {  
@@ -175,13 +165,17 @@ public class DataBaseHelper extends SQLiteOpenHelper{
         return cur;
     }
  
+    /**
+     * close database when not using
+     */
     @Override
 	public synchronized void close() {
- 
-    	    if(myDataBase != null)
-    		    myDataBase.close();
- 
-    	    super.close();
+    	
+    	if(myDataBase != null)
+    		
+    		myDataBase.close();
+    	
+    	super.close();
  
 	}
  

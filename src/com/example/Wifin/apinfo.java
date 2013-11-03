@@ -1,14 +1,12 @@
 package com.example.Wifin;
 /**
- * complex type for store custom wifi info 
+ * custom complex type for store custom wifi info 
  */
 public class apinfo {
-
-		private double lat, lon;
-		private String title,mac;
-		private int level;
+	private double lat, lon;
+	private String title,mac;
+	private int level;
 		private String ctype;
-		private String distance;
 
 		public apinfo (double lat, double lon, String title, int level,String mac,String ctype) {
 		    super();

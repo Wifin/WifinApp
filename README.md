@@ -3,4 +3,4 @@ WifinApp
 
 Wifi Visualization Application
 
-Still under developing...
+functions up!

@@ -6,18 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 import android.util.JsonReader;
 
-public class jsonReader {  
+/**
+ * class for read json file
+ */
+public class jsonReader {
 	
+	/**
+	 * main method to execute json reader
+	 * @param in - the source json input stream for prepared for read
+	 */
 	public List<apinfo> readJsonStream(InputStreamReader in) throws IOException {
-	     JsonReader reader = new JsonReader(in);
-	     try {
-	       return readLocationArray(reader);
-	     }
-	      finally {
-	       reader.close();
-	     }
-	   }
+		JsonReader reader = new JsonReader(in);
+		try {
+			return readLocationArray(reader);
+			}
+		finally {
+			reader.close();
+			}
+		}
 	     
+	/**
+	 * read the structure of a json file
+	 * @param reader - json reader
+	 */
 	public List<apinfo> readLocationArray(JsonReader reader) throws IOException {
         List<apinfo> messages = new ArrayList<apinfo>();
         String status = null;
@@ -36,12 +47,16 @@ public class jsonReader {
             	    messages.add(readMessage(reader));
 	        	}
             	reader.endArray();
-	        }
-        }
+            	}
+            }
         reader.endObject();
         return messages;
-    }
+        }
 	
+	/**
+	 * get the details data in each json file, return into custom type apinfo
+	 * @param reader - json reader
+	 */
 	public apinfo readMessage(JsonReader reader) throws IOException {
 	    Double lat = null;
 	    Double lon = null;
@@ -49,7 +64,6 @@ public class jsonReader {
 	    int level = 0;
 	    String mac = null;
 	    String ctype =null;
-	    String distance = null;
 	     
 	    reader.beginObject();
 	    while (reader.hasNext()) {
